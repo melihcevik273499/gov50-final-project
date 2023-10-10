@@ -11,4 +11,5 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to something with election results from either 2016, 2018, 2020, or 2024. I don't know exactly what I would explore, it all depends on what data I can find. If I could find data from a statewide election in Michigan, that would be what I would want to do. But I'm unsure of what exactly. 
+I am interested in using the Fox news dataset for my final project. I am still working on the research question and claim that I will be making. 
+add

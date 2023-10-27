@@ -16,6 +16,22 @@ Can the percentage of a town's fox news subscribers predict their GOP vote share
 ```{r}
 library(tidyverse)
 foxnews <- read_csv("foxnews.csv")
+foxnews
+```
+
+
+
+
+
+
+
+```{r}
+foxnews1 <- foxnews |> 
+  filter(!subrf2000 == 0.00000000 ) |>
+  select(state,town,subrf2000,gopvoteshare1996,gopvoteshare2000 ) 
+
+ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + geom_point()
+
 ```
 
 

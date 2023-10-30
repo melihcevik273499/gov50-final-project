@@ -16,7 +16,6 @@ Can the percentage of a town's fox news subscribers predict their GOP vote share
 ```{r}
 library(tidyverse)
 foxnews <- read_csv("foxnews.csv")
-foxnews
 ```
 
 

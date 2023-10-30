@@ -30,7 +30,7 @@ foxnews1 <- foxnews |>
   filter(!subrf2000 == 0.00000000 ) |>
   select(state,town,subrf2000,gopvoteshare1996,gopvoteshare2000 ) 
 
-ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + geom_point()
+ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + geom_point() + geom_smooth()
 ```
 
 

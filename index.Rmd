@@ -23,8 +23,6 @@ foxnews
 
 
 
-
-
 ```{r}
 foxnews1 <- foxnews |> 
   filter(!subrf2000 == 0.00000000 ) |>

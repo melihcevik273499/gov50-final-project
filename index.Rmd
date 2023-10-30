@@ -31,7 +31,6 @@ foxnews1 <- foxnews |>
   select(state,town,subrf2000,gopvoteshare1996,gopvoteshare2000 ) 
 
 ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + geom_point()
-
 ```
 
 

@@ -39,7 +39,6 @@ ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + ge
 ```{r}
 fit <- lm(gopvoteshare2000 ~ subrf2000, data = foxnews1 )
 fit
-knitr::kable()
 ```
 
 

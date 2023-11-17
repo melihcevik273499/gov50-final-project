@@ -18,7 +18,6 @@ library(tidyverse)
 library(infer)
 library(broom)
 library(modelsummary)
-install.packages("modelsummary")
 foxnews <- read_csv("foxnews.csv")
 ```
 

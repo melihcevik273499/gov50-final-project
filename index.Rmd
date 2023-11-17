@@ -17,6 +17,8 @@ Can the percentage of a town's fox news subscribers predict their GOP vote share
 library(tidyverse)
 library(infer)
 library(broom)
+library(modelsummary)
+install.packages("modelsummary")
 foxnews <- read_csv("foxnews.csv")
 ```
 
@@ -30,7 +32,7 @@ foxnews1 <- foxnews |>
   select(state,town,subrf2000,gopvoteshare1996,gopvoteshare2000 ) 
 
 ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + geom_point() +  geom_smooth(method = "lm", se = FALSE) +  labs(x = "Share of Households who subscribe to Fox News in the Town (as a percent)",
-       y = "Proportion of who Voted Republican in the Town in the 2000 election",
+       y = "Republican vote(%) in Town",
        title = "The relation between Fox News Subscriptions and the 2000 Presidential Election",
        source = "The Fox News Effect: Media Bias and Voting. Published in the Quarterly Journal of Economics")
 
@@ -39,6 +41,7 @@ ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + ge
 ```{r}
 fit <- lm(gopvoteshare2000 ~ subrf2000, data = foxnews1 )
 fit
+modelsummary(list(fit))
 ```
-
+As the percentage of fox news subscribers in a town increases by 1 percentage point, the share in Gop votes as a percentage decreases by 0.07 percentage points. There is a slight negative correlation between fox news subscribers and the GOP vote share in a town in the 2000 election. 
 

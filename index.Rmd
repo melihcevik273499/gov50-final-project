@@ -44,6 +44,15 @@ As we see in this graph, as the share of households who subscribe to Fox news in
 
 
 ```{r}
+fit <- lm(gopvoteshare2000 ~ subrf2000, data = foxnews )
+fit2 <- lm(gopvoteshare2000 ~ subrf2000 + college1990, data = foxnews )
+
+modelsummary(list(fit, fit2))
+
+```
+
+
+```{r}
 ggplot( data = fit2, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + 
   geom_point(color = "gray", shape = 1)+  
   geom_smooth(method = "lm", se = FALSE) +  
@@ -54,14 +63,6 @@ ggplot( data = fit2, mapping = aes(x = subrf2000, y = gopvoteshare2000)) +
 ```
 As we see in this graph, as the share of households who subscribe to Fox news in the Town as a percentage increases, on average the Republican vote share in the town slightly decreases. For every one percentage point increase in a Town's republican vote share in the 2000 election, the GOP vote share decreased by 0.01 percentage point when we were holding for college education level. This shows that college education levels to some extent were confounding variables in determining the impact of Fox News subscriptions on a towns Republican vote share. 
 
-
-```{r}
-fit <- lm(gopvoteshare2000 ~ subrf2000, data = foxnews )
-fit2 <- lm(gopvoteshare2000 ~ subrf2000 + college1990, data = foxnews )
-
-modelsummary(list(fit, fit2))
-
-```
 
 
 

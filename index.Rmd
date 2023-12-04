@@ -18,7 +18,7 @@ library(tidyverse)
 library(infer)
 library(broom)
 library(modelsummary)
-foxnews <- read_csv("foxnews.csv")
+foxnews <- read_csv("foxnews.csv", show_col_types = FALSE)
 ```
 
 
@@ -30,17 +30,56 @@ foxnews1 <- foxnews |>
   filter(!subrf2000 == 0.00000000 ) |>
   select(state,town,subrf2000,gopvoteshare1996,gopvoteshare2000 ) 
 
-ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + geom_point() +  geom_smooth(method = "lm", se = FALSE) +  labs(x = "Share of Households who subscribe to Fox News in the Town (as a percent)",
+ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + 
+  geom_point(color = "gray", shape = 1) +  
+  geom_smooth(method = "lm", se = FALSE) +  
+  labs(x = "Share of Households who subscribe to Fox News in the Town (as a percent)",
        y = "Republican vote(%) in Town",
-       title = "The relation between Fox News Subscriptions and the 2000 Presidential Election",
-       source = "The Fox News Effect: Media Bias and Voting. Published in the Quarterly Journal of Economics")
+       title = "The relation between Fox News Subscriptions and the 2000 Presidential Election",source = "The Fox News Effect: Media Bias and Voting. Published in the Quarterly Journal of Economics") +
+  theme_bw()
 
 ```
+As we see in this graph, as the share of households who subscribe to Fox news in the Town as a percentage increases, on average the Republican vote share in the town slightly decreases. For every one percentage point increase in a Town's republican vote share in the 2000 election, the GOP vote share decreased by 0.018 percentage points. 
+
+
 
 ```{r}
-fit <- lm(gopvoteshare2000 ~ subrf2000, data = foxnews1 )
-fit
-modelsummary(list(fit))
+ggplot( data = fit2, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + 
+  geom_point(color = "gray", shape = 1)+  
+  geom_smooth(method = "lm", se = FALSE) +  
+  labs(x = "Share of Households who subscribe to Fox News in the Town (as a percent)",
+       y = "Republican vote(%) in Town",
+       title = "Fox News Subscriptions and the 2000 Election controlled for College Education",
+       source = "The Fox News Effect: Media Bias and Voting. Published in the Quarterly Journal of Economics") +   theme_bw()
 ```
-As the percentage of fox news subscribers in a town increases by 1 percentage point, the share in Gop votes as a percentage decreases by 0.07 percentage points. There is a slight negative correlation between fox news subscribers and the GOP vote share in a town in the 2000 election. 
+As we see in this graph, as the share of households who subscribe to Fox news in the Town as a percentage increases, on average the Republican vote share in the town slightly decreases. For every one percentage point increase in a Town's republican vote share in the 2000 election, the GOP vote share decreased by 0.01 percentage point when we were holding for college education level. This shows that college education levels to some extent were confounding variables in determining the impact of Fox News subscriptions on a towns Republican vote share. 
+
+
+```{r}
+fit <- lm(gopvoteshare2000 ~ subrf2000, data = foxnews )
+fit2 <- lm(gopvoteshare2000 ~ subrf2000 + college1990, data = foxnews )
+
+modelsummary(list(fit, fit2))
+
+```
+
+
+
+```{r}
+foxnews2 <- foxnews |> 
+select(state,town,subrf2000,gopvoteshare1996,gopvoteshare2000 ) 
+foxnews2 <- foxnews2 |>
+filter(state ==  c("Ca", "Al", "Pa"))
+
+ggplot(data = foxnews2, mapping = aes(x = subrf2000, y = gopvoteshare2000)) +
+  geom_point(color = "gray", shape = 1) +  
+  geom_smooth(method = "lm", se = FALSE) + 
+  facet_wrap(~ state) + 
+  labs(x = "Share of Households who subscribe to Fox News in the Town (as a percent)",
+       y = "Republican vote(%) in Town",
+       title = "Fox News Subscriptions and Republican vote % in the 2000 Election",
+       source = "The Fox News Effect: Media Bias and Voting. Published in the Quarterly Journal of Economics")
+```
+A question that arises is whether or not Fox News subscriptions had different effects on Vote share's depending on a location. To determine this, we selected three states, one that solidly voted Republican (Alabama), one that solidly voted Democratic (California) and a state that was decided within 5% (Pennsylvania). Our analysis shows that Fox News Subscriptions had different correlations in different states. In the noncompetitive states, there was a positive correlation between Fox News Subscriptions and GOP vote share. However in Pennsylvania the swing state, there was a negative correlation. 
+
 

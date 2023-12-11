@@ -45,16 +45,31 @@ ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) +
 
 
 ```{r}
+var_labels <- c(
+"(Intercept)" = "Intercept",
+"subrf2000" = "Subscribers to FNC in 2000",
+"college1990" = "Percent of Town with College Degree"
+)
+
+
+
 fit <- lm(gopvoteshare2000 ~ subrf2000, data = foxnews )
 fit2 <- lm(gopvoteshare2000 ~ subrf2000 + college1990, data = foxnews )
 
-modelsummary(list(fit, fit2))
+
+modelsummary::modelsummary(list (fit,fit2),statistic = c("s.e. = {std.error}",
+"p = {p.value}"),
+coef_map = var_labels,
+gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+
+
 
 ```
 
   The analysis I decided to conduct was a linear regression output. The output describes the result of both the graph above and when we hold  for the variation as a result of college education, which is graphed below. The dependent variable in both linear regression models is a town's GOP vote share as a percentage in the 2000 presidential election. The independent variable in both linear regression models is the town's subscription rate, measured in a percentage. 
-  Our main coefficient of interest in the 1st linear regression model, of -0.019, means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.019 on average. 
-  On a secondary analysis which is graphed below, we controlled for college education level of that town, what proportion had a college education in 1990. Our main coefficient of interest in the 2nd linear regression model was -0.01. This means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.01 on average.
+  Our main coefficient of interest in the 1st linear regression model, of -0.019, means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.019 on average. Our p-value here of 0.024 is less than a 0.05 significance level, as a result we would reject the null hypothesis. 
+  On a secondary analysis which is graphed below, we controlled for college education level of that town, what proportion had a college education in 1990. Our main coefficient of interest in the 2nd linear regression model was -0.01. This means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.01 on average. In this regression our p-value of 0.246 is greater than a 0.05 significance level, therefore we would fail to reject the null hypothesis. 
 
 ```{r}
 ggplot( data = fit2, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + 

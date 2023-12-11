@@ -1551,10 +1551,22 @@ In addition to the linear regression that I will run on the overall dataset, I w
 It is important to note that a critical confounding variable exists within the research we conduct and the data set. While the data shows the subscribers as a percentage, it is limited in the fact that we do not know whether or not an individual is a viewer. This is a cross-sectional research project.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>gopvoteshare2000</span> <span class='op'>~</span> <span class='va'>subrf2000</span>, data <span class='op'>=</span> <span class='va'>foxnews</span> <span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>var_labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span><span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
+<span><span class='st'>"subrf2000"</span> <span class='op'>=</span> <span class='st'>"Subscribers to FNC in 2000"</span>,</span>
+<span><span class='st'>"college1990"</span> <span class='op'>=</span> <span class='st'>"Percent of Town with College Degree"</span></span>
+<span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>gopvoteshare2000</span> <span class='op'>~</span> <span class='va'>subrf2000</span>, data <span class='op'>=</span> <span class='va'>foxnews</span> <span class='op'>)</span></span>
 <span><span class='va'>fit2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>gopvoteshare2000</span> <span class='op'>~</span> <span class='va'>subrf2000</span> <span class='op'>+</span> <span class='va'>college1990</span>, data <span class='op'>=</span> <span class='va'>foxnews</span> <span class='op'>)</span></span>
 <span></span>
-<span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>fit</span>, <span class='va'>fit2</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span> <span class='op'>(</span><span class='va'>fit</span>,<span class='va'>fit2</span><span class='op'>)</span>,statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span><span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>coef_map <span class='op'>=</span> <span class='va'>var_labels</span>,</span>
+<span>gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1572,7 +1584,7 @@ It is important to note that a critical confounding variable exists within the r
 <tbody>
 <tr>
 <td style="text-align:left;">
-(Intercept)
+Intercept
 </td>
 <td style="text-align:center;">
 0.540
@@ -1585,15 +1597,25 @@ It is important to note that a critical confounding variable exists within the r
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.001)
+s.e. = 0.001
 </td>
 <td style="text-align:center;">
-(0.002)
+s.e. = 0.002
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-subrf2000
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Subscribers to FNC in 2000
 </td>
 <td style="text-align:center;">
 −0.019
@@ -1606,15 +1628,25 @@ subrf2000
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.008)
+s.e. = 0.008
 </td>
 <td style="text-align:center;">
-(0.008)
+s.e. = 0.008
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-college1990
+</td>
+<td style="text-align:center;">
+p = 0.024
+</td>
+<td style="text-align:center;">
+p = 0.246
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Percent of Town with College Degree
 </td>
 <td style="text-align:center;">
 </td>
@@ -1623,12 +1655,21 @@ college1990
 </td>
 </tr>
 <tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.012
+</td>
+</tr>
+<tr>
 <td style="text-align:left;box-shadow: 0px 1.5px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1.5px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1.5px">
-(0.012)
+p = &lt;0.001
 </td>
 </tr>
 <tr>
@@ -1664,56 +1705,12 @@ R2 Adj.
 0.010
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-AIC
-</td>
-<td style="text-align:center;">
-−12162.7
-</td>
-<td style="text-align:center;">
-−12257.9
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BIC
-</td>
-<td style="text-align:center;">
-−12141.1
-</td>
-<td style="text-align:center;">
-−12229.2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Log.Lik.
-</td>
-<td style="text-align:center;">
-6084.356
-</td>
-<td style="text-align:center;">
-6132.964
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-RMSE
-</td>
-<td style="text-align:center;">
-0.13
-</td>
-<td style="text-align:center;">
-0.13
-</td>
-</tr>
 </tbody>
 </table>
 </div>
 <p>The analysis I decided to conduct was a linear regression output. The output describes the result of both the graph above and when we hold for the variation as a result of college education, which is graphed below. The dependent variable in both linear regression models is a town’s GOP vote share as a percentage in the 2000 presidential election. The independent variable in both linear regression models is the town’s subscription rate, measured in a percentage.
-Our main coefficient of interest in the 1st linear regression model, of -0.019, means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.019 on average.
-On a secondary analysis which is graphed below, we controlled for college education level of that town, what proportion had a college education in 1990. Our main coefficient of interest in the 2nd linear regression model was -0.01. This means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.01 on average.</p>
+Our main coefficient of interest in the 1st linear regression model, of -0.019, means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.019 on average. Our p-value here of 0.024 is less than a 0.05 significance level, as a result we would reject the null hypothesis.
+On a secondary analysis which is graphed below, we controlled for college education level of that town, what proportion had a college education in 1990. Our main coefficient of interest in the 2nd linear regression model was -0.01. This means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.01 on average. In this regression our p-value of 0.246 is greater than a 0.05 significance level, therefore we would fail to reject the null hypothesis.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span> data <span class='op'>=</span> <span class='va'>fit2</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>subrf2000</span>, y <span class='op'>=</span> <span class='va'>gopvoteshare2000</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>

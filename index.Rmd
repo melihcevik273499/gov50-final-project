@@ -7,7 +7,7 @@ output:
     self_contained: false
 ---
 
-## Project thoughts
+## Introduction
 
 
   Can the percentage of a town's fox news subscribers predict their GOP vote share. In this study, I plan to examine whether or not there is a correlation between the percentage of fox news subscribers, and whether the percentage of how many voted Republican in the 2000 presidential election. I hypothesize that towns with a greater percentage of fox news subscribers will see a greater percentage of those voting Republican. My explanatory variable is the share of subscribers to fox news in a town in the year 2000 , my response variable is Republican vote share in that town in the year 2000. If I observe, on average, a greater republican vote percentages in a town where there is a high prevalence of fox news, then my hypothesis will be correct. If I observe on average, a lower republican vote percentage in a town where there is a high share of fox news subscribers. 
@@ -23,7 +23,7 @@ foxnews <- read_csv("foxnews.csv", show_col_types = FALSE)
 
 
 
-
+## Data Section
 
 ```{r}
 foxnews1 <- foxnews |> 
@@ -43,7 +43,7 @@ ggplot(data = foxnews1, mapping = aes(x = subrf2000, y = gopvoteshare2000)) +
   It is important to note that a critical confounding variable exists within the research we conduct and the data set. While the data shows the subscribers as a percentage, it is limited in the fact that we do not know whether or not an individual is a viewer. This is a cross-sectional research project. 
 
 
-
+## Results Section
 ```{r}
 var_labels <- c(
 "(Intercept)" = "Intercept",
@@ -67,9 +67,12 @@ gof_map = c("nobs", "r.squared", "adj.r.squared"))
 
 ```
 
-  The analysis I decided to conduct was a linear regression output. The output describes the result of both the graph above and when we hold  for the variation as a result of college education, which is graphed below. The dependent variable in both linear regression models is a town's GOP vote share as a percentage in the 2000 presidential election. The independent variable in both linear regression models is the town's subscription rate, measured in a percentage. 
+  The analysis I decided to conduct was a linear regression output. The output describes the result of both the graph above and when we hold for the variation as a result of college education, which is graphed below. The dependent variable in both linear regression models is a town's GOP vote share as a percentage in the 2000 presidential election. The independent variable in both linear regression models is the town's subscription rate, measured in a percentage. 
   Our main coefficient of interest in the 1st linear regression model, of -0.019, means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.019 on average. Our p-value here of 0.024 is less than a 0.05 significance level, as a result we would reject the null hypothesis. 
-  On a secondary analysis which is graphed below, we controlled for college education level of that town, what proportion had a college education in 1990. Our main coefficient of interest in the 2nd linear regression model was -0.01. This means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.01 on average. In this regression our p-value of 0.246 is greater than a 0.05 significance level, therefore we would fail to reject the null hypothesis. 
+  On a secondary analysis which is graphed below, we controlled for college education level of that town, what proportion had a college education in 1990. Our main coefficient of interest in the 2nd linear regression model was -0.01. This means that for every percentage point increase in a town of Fox News Subscribers in the year 2000, there was a decrease for Republican support in the 2000 election of 0.01 on average. In this regression our p-value of 0.246 is greater than a 0.05 significance level, therefore we would fail to reject the null hypothesis.
+  
+
+## Additional Data Section
 
 ```{r}
 ggplot( data = fit2, mapping = aes(x = subrf2000, y = gopvoteshare2000)) + 
@@ -107,8 +110,8 @@ ggplot(data = foxnews2, mapping = aes(x = subrf2000, y = gopvoteshare2000)) +
 
 
 
+## Conclusion
 
-Conclusion: 
   Overall, we find that in the 2000 Presidential election, there was a slightly negative correlation between a town's percentage of Republican vote share in the 2000 Presidential election, and the percentage of that town who has a cable subscription that includes Fox News. When controlling for college education, we see that this negative correlation still exists, despite a weakening. We also find that there is variation in correlation dependent on the individual state. This is the opposite of my original hypothesis, however, there were numerous limitations and confounding variables to allow us to make an inference. When controlling for college education level, we saw a slighlty less negative correlation, but this finding was not statistically significant compared to the first one.  First, the dataset is outdated, there have since been 5 presidential election cycles, as a result we cannot apply the conclusion to today's political situation. Furthermore, a confounding variable that existed within the data was whether or not the town watched Fox News. If I were to design a study today with unlimited time and money, I would look at in the next presidential election, a town's viewership, not subscription to Fox News and their Republican vote share. I would also collect more data points, this data set failed to collect data from a wide variety of states and localities, I would have a broader sample if I had unlimited resources. 
 
 
